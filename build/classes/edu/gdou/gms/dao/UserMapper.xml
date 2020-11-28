@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace:该mapper.xml映射文件的 唯一标识 -->
+<mapper namespace="edu.gdou.gms.dao.UserMapper">
+
+	<!-- 根据账号查询密码 -->
+	<select id="queryPasswordbyUserId" 	parameterType="int"  	resultType="String"  >
+		select password from user where userid = #{userId}
+	</select>
+	
+	<!-- 根据账号查询用户 -->
+	<select id="queryUserByUserId" parameterType="int" resultType="edu.gdou.gms.entity.User">
+		select * from user where userid=#{userId}
+	</select>
+	
+	<!-- 查询管理员 -->
+	<select id="queryManagers" parameterType="edu.gdou.gms.entity.User" resultType="edu.gdou.gms.entity.User"  >
+		select * from user where 1=1
+		<if test="userId !=null and userId !=0  "> 
+			and userid = #{userId}
+		</if>
+		<if test="userName !=null and userName !='' ">
+			and username= #{userName}
+		</if>
+		 
+	</select>
+	
+	<!-- 根据账号查询职位 -->
+	<select id="queryRolebyUserId" 	parameterType="int"  	resultType="String"  >
+		select role from user where userid = #{userId}
+	</select>
+	
+	<!-- 查询所有的用户 -->
+	<select id="queryAllUser"	resultType="edu.gdou.gms.entity.User"  >
+		select * from user
+	</select>
+	
+	<!-- 添加一个用户 -->
+	<insert id="addUser" parameterType="edu.gdou.gms.entity.User" >
+		insert into user(userid,password,role) values(#{userId},#{password},#{role})
+	</insert>
+	
+	<!-- 添加管理员 -->
+	<insert id="addManager" parameterType="edu.gdou.gms.entity.User" >
+		insert into user(userid,password,username,role,tel) values(#{userId},#{password},#{userName},#{role},#{tel})
+	</insert>
+	
+	<!-- 删除用户 -->
+	<delete id="deleteUser" parameterType="int" >
+		delete from user where userid=#{userId}
+	</delete>
+	
+	<!-- 修改密码 -->
+	<update id="undatepassword" parameterType="edu.gdou.gms.entity.User" >
+		update user set password=#{anotherPassword} where userid=#{userId}
+	</update>
+	
+	<!-- 完善信息-->
+	<update id="completeInfo" parameterType="edu.gdou.gms.entity.User" >
+		update user set username=#{userName},tel=#{tel},idnumber=#{idNumber},email=#{email},birthday=#{birthday},address=#{address} where userid=#{userId}
+	</update>	
+	
+	<!-- 修改用户职位 -->
+	<update id="undateUserRole" parameterType="edu.gdou.gms.entity.User" >
+		update user set role=#{role} where userid=#{userId}
+	</update>
+</mapper>

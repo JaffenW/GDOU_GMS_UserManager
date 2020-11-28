@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- namespace:该mapper.xml映射文件的 唯一标识 -->
+<mapper namespace="edu.gdou.gms.dao.NoticeMapper">
+
+	<!-- 根据id查询公告 -->
+	<select id="queryNoticeById" 	parameterType="int"  	resultType="edu.gdou.gms.entity.Notice"  >
+		select * from notice where noticeid = #{noticeId}
+	</select>
+	
+	<!-- 查询所有的公告 -->
+	<select id="queryAllNotice"	resultType="edu.gdou.gms.entity.Notice"  >
+		select * from notice
+	</select>
+	
+</mapper>
